@@ -3,7 +3,7 @@
 
 # COMMAND ----------
 
-from pyspark.sql.functions import count, countDistinct, min, max, sum, sumDistinct
+from pyspark.sql.functions import count, countDistinct, min, max, sum, sumDistinct, avg, mean, round
 
 # COMMAND ----------
 
@@ -104,3 +104,13 @@ store_sales_df.count()
 
 unique_quantity = store_sales_df.select(sumDistinct('ss_quantity').alias("quantity"), sum('ss_quantity').alias("quantityWithDuplicates"))
 unique_quantity.show()
+
+# COMMAND ----------
+
+average_quantity = store_sales_df.select(avg('ss_quantity').alias('average'), mean('ss_quantity').alias("mean"), (sum('ss_quantity') / count('ss_quantity')).alias('calculated_average'), min('ss_quantity').alias('min'), max('ss_quantity').alias('max'))
+average_quantity.show()
+
+# COMMAND ----------
+
+grouped_sold_items = store_sales_df.groupBy("ss_customer_sk").agg(countDistinct("ss_item_sk").alias("item_count"), sum("ss_quantity").alias("quantity"), round(sum("ss_net_paid"), 2).alias("total_net"), round(max("ss_net_paid"), 2).alias("max_paid"), round(min("ss_net_paid"), 2).alias("min_paid"), round(avg("ss_net_paid"), 2).alias("avg_paied")).withColumnRenamed("ss_customer_sk", "customer_id")
+grouped_sold_items.show()

@@ -32,3 +32,7 @@ incomeBandIncomeGroups.printSchema()
 
 incomeClasses = incomeBandIncomeGroups.withColumnRenamed('isFirstIncomeGroup', "isLowIncomeClass").withColumnRenamed('isSecondIncomeGroup', "isIntermediateIncomeClass").withColumnRenamed('isThirdIncomeGroup', "isHighIncomeClass")
 incomeClasses.printSchema()
+
+# COMMAND ----------
+
+

@@ -3,10 +3,6 @@
 
 # COMMAND ----------
 
-
-
-# COMMAND ----------
-
 # MAGIC %sql
 # MAGIC use retailer_db
 
